@@ -39,12 +39,17 @@ namespace EventSourcingCQRS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton(x => EventStoreConnection.Create(new Uri("tcp://eventstore:1113")));
+            var connectionString = "ConnectTo=tcp://admin:changeit@localhost:1113; HeartBeatTimeout=500";
+            services.AddSingleton(x => EventStoreConnection.Create(connectionString: connectionString));
             services.AddTransient<ITransientDomainEventPublisher, TransientDomainEventPubSub>();
             services.AddTransient<ITransientDomainEventSubscriber, TransientDomainEventPubSub>();
             services.AddTransient<IRepository<Cart, CartId>, EventSourcingRepository<Cart, CartId>>();
             services.AddSingleton<IEventStore, EventStoreEventStore>();
-            services.AddSingleton(x => new MongoClient("mongodb://mongo:27017"));
+            var mongoSettings = new MongoClientSettings()
+            {
+                Server = MongoServerAddress.Parse("localhost:1234"),
+            };
+            services.AddSingleton(x => new MongoClient(mongoSettings));
             services.AddSingleton(x => x.GetService<MongoClient>().GetDatabase(ReadModelDBName));
             services.AddTransient<IReadOnlyRepository<ReadCart>, MongoDBRepository<ReadCart>>();
             services.AddTransient<IRepository<ReadCart>, MongoDBRepository<ReadCart>>();

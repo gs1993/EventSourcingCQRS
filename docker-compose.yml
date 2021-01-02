@@ -3,21 +3,29 @@ version: '3'
 services:
   mongo:
     image: mongo
+    ports:
+      - 1234:27017
     networks:
       - eventsourcingcqrsnet
+
   eventstore:
-    image: eventstore/eventstore
+    image: eventstore/eventstore:release-5.0.8
+    command: --dev
+    ports:
+      - 1113:1113
+      - 2113:2113
+#    restart: always
     networks:
       - eventsourcingcqrsnet
-  eventsourcingcqrs:
-    image: eventsourcingcqrs
-    build:
-      context: ./EventSourcingCQRS
-      dockerfile: Dockerfile
-    depends_on:
-      - eventstore
-    networks:
-      - eventsourcingcqrsnet
+
+#  eventsourcingcqrs:
+#    image: eventsourcingcqrs
+#    build:
+#      context: ./EventSourcingCQRS
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - eventstore
+
 
 networks:
   eventsourcingcqrsnet:
