@@ -4,8 +4,9 @@ using Domain.CustomerModule;
 using Domain.ProductModule;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.CartModule.Events;
 
-namespace Domain.CartModule
+namespace Domain.CartModule.Models
 {
     public class Cart : AggregateBase<CartId>
     {

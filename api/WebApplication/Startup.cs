@@ -1,6 +1,6 @@
+using Domain.CartModule;
 using EventSourcingCQRS.Application.Handlers;
 using EventSourcingCQRS.Application.PubSub;
-using EventSourcingCQRS.Application.Services;
 using EventSourcingCQRS.Domain.CartModule;
 using EventSourcingCQRS.Domain.EventStore;
 using EventSourcingCQRS.Domain.Persistence;
@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using ReadModel.Services;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

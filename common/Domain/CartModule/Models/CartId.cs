@@ -1,7 +1,7 @@
 ﻿using Domain.Core;
 using System;
 
-namespace Domain.CartModule
+namespace Domain.CartModule.Models
 {
     public class CartId : IAggregateId
     {

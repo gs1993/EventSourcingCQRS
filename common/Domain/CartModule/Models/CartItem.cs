@@ -1,6 +1,6 @@
 ﻿using Domain.ProductModule;
 
-namespace Domain.CartModule
+namespace Domain.CartModule.Models
 {
     public class CartItem
     {
@@ -17,7 +17,7 @@ namespace Domain.CartModule
         public override bool Equals(object obj)
         {
             var castedObj = obj as CartItem;
-            return castedObj != null && Equals(castedObj.ProductId, ProductId) 
+            return castedObj != null && Equals(castedObj.ProductId, ProductId)
                 && Equals(castedObj.Quantity, Quantity);
         }
 

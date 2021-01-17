@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.CartModule
+namespace Domain.CartModule.Models
 {
 
     [Serializable]

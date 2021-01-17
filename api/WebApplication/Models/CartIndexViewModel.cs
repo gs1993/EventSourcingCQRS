@@ -1,6 +1,6 @@
-﻿using EventSourcingCQRS.ReadModel.Cart;
-using EventSourcingCQRS.ReadModel.Customer;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using ReadModel.Cart;
+using ReadModel.Customer;
 using System.Collections.Generic;
 using System.Linq;
 

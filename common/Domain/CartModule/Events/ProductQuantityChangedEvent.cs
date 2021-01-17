@@ -1,7 +1,8 @@
-﻿using Domain.Core;
+﻿using Domain.CartModule.Models;
+using Domain.Core;
 using Domain.ProductModule;
 
-namespace Domain.CartModule
+namespace Domain.CartModule.Events
 {
     public class ProductQuantityChangedEvent : DomainEventBase<CartId>
     {
@@ -16,7 +17,7 @@ namespace Domain.CartModule
             NewQuantity = newQuantity;
         }
 
-        private ProductQuantityChangedEvent(CartId aggregateId, long aggregateVersion, ProductId productId, 
+        private ProductQuantityChangedEvent(CartId aggregateId, long aggregateVersion, ProductId productId,
             int oldQuantity, int newQuantity) : base(aggregateId, aggregateVersion)
         {
             ProductId = productId;
@@ -32,7 +33,7 @@ namespace Domain.CartModule
 
         public override IDomainEvent<CartId> WithAggregate(CartId aggregateId, long aggregateVersion)
         {
-            return new ProductQuantityChangedEvent(aggregateId, aggregateVersion,ProductId, OldQuantity, NewQuantity);
+            return new ProductQuantityChangedEvent(aggregateId, aggregateVersion, ProductId, OldQuantity, NewQuantity);
         }
     }
 }

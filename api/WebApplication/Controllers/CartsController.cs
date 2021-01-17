@@ -1,8 +1,9 @@
-﻿using EventSourcingCQRS.Application.Services;
-using EventSourcingCQRS.ReadModel.Customer;
-using EventSourcingCQRS.ReadModel.Persistence;
-using EventSourcingCQRS.ReadModel.Product;
+﻿using Domain.CartModule;
 using Microsoft.AspNetCore.Mvc;
+using ReadModel.Customer;
+using ReadModel.Persistence;
+using ReadModel.Product;
+using ReadModel.Services;
 using System.Threading.Tasks;
 using WebApplication.Models;
 
@@ -33,8 +34,8 @@ namespace WebApplication.Controllers
         {
             var viewModel = new CartIndexViewModel
             {
-                Carts = await _cartReader.FindAll(x => true),
-                Customers = await _customerRepository.FindAllAsync(x => true)
+                Carts = await _cartReader.Find(x => true),
+                Customers = await _customerRepository.Find(x => true)
             };
 
             return View(viewModel);
@@ -47,7 +48,7 @@ namespace WebApplication.Controllers
             {
                 Cart = await _cartReader.Get(id),
                 CartItems = await _cartReader.GetCartItems(id),
-                Products = await _productRepository.FindAllAsync(x => true)
+                Products = await _productRepository.Find(x => true)
             };
 
             return View(viewModel);

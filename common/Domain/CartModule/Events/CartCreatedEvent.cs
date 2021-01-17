@@ -1,7 +1,8 @@
-﻿using Domain.Core;
+﻿using Domain.CartModule.Models;
+using Domain.Core;
 using Domain.CustomerModule;
 
-namespace Domain.CartModule
+namespace Domain.CartModule.Events
 {
     public class CartCreatedEvent : DomainEventBase<CartId>
     {
