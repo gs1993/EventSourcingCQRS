@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EventSourcingCQRS.ReadModel.Cart;
-using EventSourcingCQRS.ReadModel.Product;
+using ReadModel.Cart;
+using ReadModel.Product;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApplication.Models

@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\EventSourcingCQRS.Application\EventSourcingCQRS.Application.csproj" />
-    <ProjectReference Include="..\..\EventSourcingCQRS.Domain.EventStore\EventSourcingCQRS.Domain.EventStore.csproj" />
-    <ProjectReference Include="..\..\EventSourcingCQRS.ReadModel\EventSourcingCQRS.ReadModel.csproj" />
+    <ProjectReference Include="..\..\common\ReadModel\ReadModel.csproj" />
   </ItemGroup>
 
 </Project>
