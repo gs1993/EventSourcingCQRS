@@ -9,11 +9,11 @@ namespace EventSourcingCQRS.Application.Services
 {
     public interface ICartReader
     {
-        Task<Cart> GetByIdAsync(Guid id);
+        Task<Cart> Get(string id);
 
-        Task<IEnumerable<Cart>> FindAllAsync(Expression<Func<Cart, bool>> predicate);
+        Task<IEnumerable<Cart>> FindAll(Expression<Func<Cart, bool>> predicate);
 
-        Task<IEnumerable<CartItem>> GetItemsOfAsync(string cartId);
+        Task<IEnumerable<CartItem>> GetCartItems(string cartId);
     }
 
     public class CartReader : ICartReader
@@ -21,26 +21,27 @@ namespace EventSourcingCQRS.Application.Services
         private readonly IReadOnlyRepository<Cart> _cartRepository;
         private readonly IReadOnlyRepository<CartItem> _cartItemRepository;
 
-        public CartReader(IReadOnlyRepository<Cart> cartRepository, IReadOnlyRepository<CartItem> cartItemRepository)
+        public CartReader(IReadOnlyRepository<Cart> cartRepository, 
+            IReadOnlyRepository<CartItem> cartItemRepository)
         {
             this._cartRepository = cartRepository;
             this._cartItemRepository = cartItemRepository;
         }
 
 
-        public async Task<Cart> GetByIdAsync(Guid id)
+        public Task<Cart> Get(string id)
         {
-            return await _cartRepository.GetByIdAsync(id.ToString()); //TODO: change repo arg to guid
+            return _cartRepository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Cart>> FindAllAsync(Expression<Func<Cart, bool>> predicate)
+        public Task<IEnumerable<Cart>> FindAll(Expression<Func<Cart, bool>> predicate)
         {
-            return await _cartRepository.FindAllAsync(predicate);
+            return _cartRepository.FindAllAsync(predicate);
         }
 
-        public async Task<IEnumerable<CartItem>> GetItemsOfAsync(string cartId)
+        public Task<IEnumerable<CartItem>> GetCartItems(string cartId)
         {
-            return await _cartItemRepository.FindAllAsync(x => x.CartId == cartId);
+            return _cartItemRepository.FindAllAsync(x => x.CartId == cartId);
         }
     }
 }

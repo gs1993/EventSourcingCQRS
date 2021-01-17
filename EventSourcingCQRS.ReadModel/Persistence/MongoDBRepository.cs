@@ -30,7 +30,7 @@ namespace EventSourcingCQRS.ReadModel.Persistence
         {
             return mongoDatabase.GetCollection<T>(CollectionName)
                 .Find(x => x.Id == id)
-                .SingleAsync();
+                .SingleOrDefaultAsync();
         }
 
         public async Task InsertAsync(T entity)

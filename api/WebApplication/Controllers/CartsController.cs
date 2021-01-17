@@ -1,13 +1,8 @@
 ﻿using EventSourcingCQRS.Application.Services;
-using EventSourcingCQRS.ReadModel.Cart;
 using EventSourcingCQRS.ReadModel.Customer;
 using EventSourcingCQRS.ReadModel.Persistence;
 using EventSourcingCQRS.ReadModel.Product;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Models;
 
@@ -20,8 +15,6 @@ namespace WebApplication.Controllers
         private readonly ICartWriter _cartWriter;
         private readonly IReadOnlyRepository<Customer> _customerRepository;
         private readonly IReadOnlyRepository<Product> _productRepository;
-
-
 
         public CartsController(ICartReader cartReader,
             ICartWriter cartWriter,
@@ -38,22 +31,25 @@ namespace WebApplication.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            return View(new CartIndexViewModel
+            var viewModel = new CartIndexViewModel
             {
-                Carts = await _cartReader.FindAllAsync(x => true),
+                Carts = await _cartReader.FindAll(x => true),
                 Customers = await _customerRepository.FindAllAsync(x => true)
-            });
+            };
+
+            return View(viewModel);
         }
 
-        [HttpGet("{action}/{id:guid}")]
-        public async Task<ActionResult> Details(Guid id)
+        [HttpGet("{action}/{id}")]
+        public async Task<ActionResult> Details(string id)
         {
             var viewModel = new CartDetailsViewModel
             {
-                Cart = await _cartReader.GetByIdAsync(id),
-                CartItems = await _cartReader.GetItemsOfAsync(id),
+                Cart = await _cartReader.Get(id),
+                CartItems = await _cartReader.GetCartItems(id),
                 Products = await _productRepository.FindAllAsync(x => true)
             };
+
             return View(viewModel);
         }
 
@@ -61,6 +57,7 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> CreateAsync(string customerId)
         {
             await _cartWriter.CreateAsync(customerId);
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -69,6 +66,7 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> AddProduct(string id, string productId, int quantity)
         {
             await _cartWriter.AddProductAsync(id, productId, quantity);
+
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -77,6 +75,7 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> ChangeProductQuantityAsync(string id, string productId, int quantity)
         {
             await _cartWriter.ChangeProductQuantityAsync(id, productId, quantity);
+
             return RedirectToAction(nameof(Details), new { id });
         }
     }
