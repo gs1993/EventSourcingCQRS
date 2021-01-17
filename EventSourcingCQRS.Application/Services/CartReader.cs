@@ -7,30 +7,40 @@ using EventSourcingCQRS.ReadModel.Persistence;
 
 namespace EventSourcingCQRS.Application.Services
 {
+    public interface ICartReader
+    {
+        Task<Cart> GetByIdAsync(Guid id);
+
+        Task<IEnumerable<Cart>> FindAllAsync(Expression<Func<Cart, bool>> predicate);
+
+        Task<IEnumerable<CartItem>> GetItemsOfAsync(string cartId);
+    }
+
     public class CartReader : ICartReader
     {
-        private readonly IReadOnlyRepository<Cart> cartRepository;
-        private readonly IReadOnlyRepository<CartItem> cartItemRepository;
+        private readonly IReadOnlyRepository<Cart> _cartRepository;
+        private readonly IReadOnlyRepository<CartItem> _cartItemRepository;
 
         public CartReader(IReadOnlyRepository<Cart> cartRepository, IReadOnlyRepository<CartItem> cartItemRepository)
         {
-            this.cartRepository = cartRepository;
-            this.cartItemRepository = cartItemRepository;
+            this._cartRepository = cartRepository;
+            this._cartItemRepository = cartItemRepository;
+        }
+
+
+        public async Task<Cart> GetByIdAsync(Guid id)
+        {
+            return await _cartRepository.GetByIdAsync(id.ToString()); //TODO: change repo arg to guid
         }
 
         public async Task<IEnumerable<Cart>> FindAllAsync(Expression<Func<Cart, bool>> predicate)
         {
-            return await cartRepository.FindAllAsync(predicate);
-        }
-
-        public async Task<Cart> GetByIdAsync(string id)
-        {
-            return await cartRepository.GetByIdAsync(id);
+            return await _cartRepository.FindAllAsync(predicate);
         }
 
         public async Task<IEnumerable<CartItem>> GetItemsOfAsync(string cartId)
         {
-            return await cartItemRepository.FindAllAsync(x => x.CartId == cartId);
+            return await _cartItemRepository.FindAllAsync(x => x.CartId == cartId);
         }
     }
 }

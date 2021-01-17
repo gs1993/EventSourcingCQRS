@@ -85,9 +85,10 @@ namespace WebApplication
 
             app.UseRouting();
             app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Carts}/{action=IndexAsync}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
             conn.ConnectAsync().Wait();

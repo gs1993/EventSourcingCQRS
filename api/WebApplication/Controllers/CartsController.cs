@@ -1,75 +1,83 @@
 ﻿using EventSourcingCQRS.Application.Services;
+using EventSourcingCQRS.ReadModel.Cart;
 using EventSourcingCQRS.ReadModel.Customer;
 using EventSourcingCQRS.ReadModel.Persistence;
 using EventSourcingCQRS.ReadModel.Product;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
+    [Route("{controller}")]
     public class CartsController : Controller
     {
-        private readonly ICartReader cartReader;
-        private readonly ICartWriter cartWriter;
-        private readonly IReadOnlyRepository<Customer> customerRepository;
-        private readonly IReadOnlyRepository<Product> productRepository;
+        private readonly ICartReader _cartReader;
+        private readonly ICartWriter _cartWriter;
+        private readonly IReadOnlyRepository<Customer> _customerRepository;
+        private readonly IReadOnlyRepository<Product> _productRepository;
 
-        public CartsController(ICartReader cartReader, 
+
+
+        public CartsController(ICartReader cartReader,
             ICartWriter cartWriter,
-            IReadOnlyRepository<Customer> customerRepository, 
+            IReadOnlyRepository<Customer> customerRepository,
             IReadOnlyRepository<Product> productRepository)
         {
-            this.cartReader = cartReader;
-            this.cartWriter = cartWriter;
-            this.customerRepository = customerRepository;
-            this.productRepository = productRepository;
+            _cartReader = cartReader;
+            _cartWriter = cartWriter;
+            _customerRepository = customerRepository;
+            _productRepository = productRepository;
         }
 
 
-        public async Task<IActionResult> IndexAsync()
+        [HttpGet]
+        public async Task<ActionResult> Index()
         {
             return View(new CartIndexViewModel
             {
-                Carts = await cartReader.FindAllAsync(x => true),
-                Customers = (await customerRepository.FindAllAsync(x => true)).ToList()
+                Carts = await _cartReader.FindAllAsync(x => true),
+                Customers = await _customerRepository.FindAllAsync(x => true)
             });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateAsync(string customerId)
-        {
-            await cartWriter.CreateAsync(customerId);
-            return RedirectToAction(nameof(IndexAsync));
-        }
-
-        [Route("Carts/{id:length(41)}")]
-        public async Task<IActionResult> DetailsAsync(string id)
+        [HttpGet("{action}/{id:guid}")]
+        public async Task<ActionResult> Details(Guid id)
         {
             var viewModel = new CartDetailsViewModel
             {
-                Cart = await cartReader.GetByIdAsync(id),
-                CartItems = (await cartReader.GetItemsOfAsync(id)).ToList(),
-                Products = (await productRepository.FindAllAsync(x => true)).ToList()
+                Cart = await _cartReader.GetByIdAsync(id),
+                CartItems = await _cartReader.GetItemsOfAsync(id),
+                Products = await _productRepository.FindAllAsync(x => true)
             };
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("Carts/{id:length(41)}/AddProduct")]
-        public async Task<IActionResult> AddProductAsync(string id, string productId, int quantity)
+        public async Task<IActionResult> CreateAsync(string customerId)
         {
-            await cartWriter.AddProductAsync(id, productId, quantity);
-            return RedirectToAction(nameof(DetailsAsync), new { id });
+            await _cartWriter.CreateAsync(customerId);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [Route("Carts/{id:length(41)}/AddProduct")]
+        public async Task<IActionResult> AddProduct(string id, string productId, int quantity)
+        {
+            await _cartWriter.AddProductAsync(id, productId, quantity);
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         [Route("Carts/{id:length(41)}/ChangeProductQuantity")]
         [HttpPost]
         public async Task<IActionResult> ChangeProductQuantityAsync(string id, string productId, int quantity)
         {
-            await cartWriter.ChangeProductQuantityAsync(id, productId, quantity);
-            return RedirectToAction(nameof(DetailsAsync), new { id });
+            await _cartWriter.ChangeProductQuantityAsync(id, productId, quantity);
+            return RedirectToAction(nameof(Details), new { id });
         }
     }
 }

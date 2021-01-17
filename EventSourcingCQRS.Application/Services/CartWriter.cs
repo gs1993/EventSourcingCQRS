@@ -9,6 +9,15 @@ using EventSourcingCQRS.Domain.PubSub;
 
 namespace EventSourcingCQRS.Application.Services
 {
+    public interface ICartWriter
+    {
+        Task CreateAsync(string customerId);
+
+        Task AddProductAsync(string cartId, string productId, int quantity);
+
+        Task ChangeProductQuantityAsync(string cartId, string productId, int quantity);
+    }
+
     public class CartWriter : ICartWriter
     {
         private readonly IRepository<Cart, CartId> cartRepository;
