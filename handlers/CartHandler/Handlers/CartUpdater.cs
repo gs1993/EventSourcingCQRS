@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using BaseHandler;
 using ReadModel.Customer;
 using ReadModel.Product;
 using ReadModel.Persistence;

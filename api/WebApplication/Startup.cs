@@ -1,14 +1,10 @@
 using Domain.CartModule;
-using EventSourcingCQRS.Application.Handlers;
-using EventSourcingCQRS.Application.PubSub;
-using EventSourcingCQRS.Domain.CartModule;
-using EventSourcingCQRS.Domain.EventStore;
-using EventSourcingCQRS.Domain.Persistence;
-using EventSourcingCQRS.Domain.Persistence.EventStore;
-using EventSourcingCQRS.Domain.PubSub;
-using EventSourcingCQRS.ReadModel.Customer;
-using EventSourcingCQRS.ReadModel.Persistence;
-using EventSourcingCQRS.ReadModel.Product;
+using Domain.CartModule.Events;
+using Domain.CartModule.Models;
+using Domain.Persistence;
+using Domain.Persistence.EventStore;
+using Domain.PubSub;
+using EventStore;
 using EventStore.ClientAPI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,13 +13,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using ReadModel.Customer;
+using ReadModel.Persistence;
+using ReadModel.Product;
 using ReadModel.Services;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
-using ReadCart = EventSourcingCQRS.ReadModel.Cart.Cart;
-using ReadCartItem = EventSourcingCQRS.ReadModel.Cart.CartItem;
+using ReadCart = ReadModel.Cart.Cart;
+using ReadCartItem = ReadModel.Cart.CartItem;
 
 namespace WebApplication
 {
@@ -62,10 +60,10 @@ namespace WebApplication
             services.AddTransient<IReadOnlyRepository<Product>, MongoDBRepository<Product>>();
             services.AddTransient<IRepository<Product>, MongoDBRepository<Product>>();
             services.AddTransient<IReadOnlyRepository<Customer>, MongoDBRepository<Customer>>();
-            services.AddTransient<IRepository<Customer>, MongoDBRepository<Customer>>();
-            services.AddTransient<IDomainEventHandler<CartId, CartCreatedEvent>, CartUpdater>();
-            services.AddTransient<IDomainEventHandler<CartId, ProductAddedEvent>, CartUpdater>();
-            services.AddTransient<IDomainEventHandler<CartId, ProductQuantityChangedEvent>, CartUpdater>();
+            services.AddTransient<IRepository<Customer>, MongoDBRepository<Customer>>(); 
+            //services.AddTransient<IDomainEventHandler<CartId, CartCreatedEvent>, CartUpdater>();
+            //services.AddTransient<IDomainEventHandler<CartId, ProductAddedEvent>, CartUpdater>();
+            //services.AddTransient<IDomainEventHandler<CartId, ProductQuantityChangedEvent>, CartUpdater>();
             services.AddTransient<ICartWriter, CartWriter>();
             services.AddTransient<ICartReader, CartReader>();
         }
@@ -94,12 +92,12 @@ namespace WebApplication
 
             conn.ConnectAsync().Wait();
 
-            if (!productRepository.FindAllAsync(x => true).Result.Any() && !customerRepository.FindAllAsync(x => true).Result.Any())
+            if (!productRepository.Find(x => true).Result.Any() && !customerRepository.Find(x => true).Result.Any())
                 SeedReadModel(productRepository, customerRepository);
         }
         
 
-        private void SeedReadModel(IRepository<Product> productRepository, IRepository<Customer> customerRepository)
+        private static void SeedReadModel(IRepository<Product> productRepository, IRepository<Customer> customerRepository)
         {
             var insertingProducts = new[] {
                 new Product
@@ -123,7 +121,7 @@ namespace WebApplication
                     Name = "Microwave oven"
                 },
             }
-            .Select(x => productRepository.InsertAsync(x));
+            .Select(x => productRepository.Insert(x));
 
             var insertingCustomers = new Customer[] {
                 new Customer
@@ -137,7 +135,7 @@ namespace WebApplication
                     Name = "Martina"
                 },
             }
-            .Select(x => customerRepository.InsertAsync(x));
+            .Select(x => customerRepository.Insert(x));
 
             Task.WaitAll(insertingProducts.Union(insertingCustomers).ToArray());
         }
