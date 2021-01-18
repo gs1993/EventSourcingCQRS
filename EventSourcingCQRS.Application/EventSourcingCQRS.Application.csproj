@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\common\ReadModel\ReadModel.csproj" />
     <ProjectReference Include="..\EventSourcingCQRS.Domain\EventSourcingCQRS.Domain.csproj" />
-    <ProjectReference Include="..\EventSourcingCQRS.ReadModel\EventSourcingCQRS.ReadModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PubSub\" />
   </ItemGroup>
 
 </Project>

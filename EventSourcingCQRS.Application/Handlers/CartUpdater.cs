@@ -1,9 +1,9 @@
 ﻿using EventSourcingCQRS.Domain.CartModule;
-using EventSourcingCQRS.ReadModel.Customer;
-using EventSourcingCQRS.ReadModel.Persistence;
-using EventSourcingCQRS.ReadModel.Product;
-using CartReadModel = EventSourcingCQRS.ReadModel.Cart.Cart;
-using CartItemReadModel = EventSourcingCQRS.ReadModel.Cart.CartItem;
+using ReadModel.Customer;
+using ReadModel.Persistence;
+using ReadModel.Product;
+using CartReadModel = ReadModel.Cart.Cart;
+using CartItemReadModel = ReadModel.Cart.CartItem;
 using System.Linq;
 using System.Threading.Tasks;
 using EventSourcingCQRS.Application.Services;

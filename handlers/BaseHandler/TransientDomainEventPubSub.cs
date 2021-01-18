@@ -1,18 +1,18 @@
-﻿using EventSourcingCQRS.Domain.PubSub;
+﻿using Domain.PubSub;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EventSourcingCQRS.Application.PubSub
+namespace BaseHandler
 {
     public class TransientDomainEventPubSub : IDisposable, ITransientDomainEventSubscriber, ITransientDomainEventPublisher
     {
-        private static AsyncLocal<Dictionary<Type, List<object>>> handlers = new AsyncLocal<Dictionary<Type, List<object>>>();
+        private static AsyncLocal<Dictionary<Type, List<object>>> _handlers = new AsyncLocal<Dictionary<Type, List<object>>>();
 
         public Dictionary<Type, List<object>> Handlers
         {
-            get => handlers.Value ?? (handlers.Value = new Dictionary<Type, List<object>>());
+            get => _handlers.Value ??= new Dictionary<Type, List<object>>();
         }
 
         public TransientDomainEventPubSub()
@@ -58,14 +58,16 @@ namespace EventSourcingCQRS.Application.PubSub
                 }
                 catch
                 {
-                    //Logging
+                    //TODO add logging
                 }
             }
         }
 
+
         private ICollection<object> GetHandlersOf<T>()
         {
-            return Handlers.GetValueOrDefault(typeof(T)) ?? (Handlers[typeof(T)] = new List<object>());
+            return Handlers.GetValueOrDefault(typeof(T)) 
+                ?? (Handlers[typeof(T)] = new List<object>());
         }
     }
 }
