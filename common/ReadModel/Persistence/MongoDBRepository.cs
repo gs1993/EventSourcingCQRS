@@ -8,25 +8,26 @@ namespace ReadModel.Persistence
 {
     public class MongoDBRepository<T> : IRepository<T> where T : IReadEntity
     {
-        private readonly IMongoDatabase mongoDatabase;
+        private readonly IMongoDatabase _mongoDatabase;
+        private string CollectionName => typeof(T).Name;
 
         public MongoDBRepository(IMongoDatabase mongoDatabase)
         {
-            this.mongoDatabase = mongoDatabase;
+            _mongoDatabase = mongoDatabase;
         }
 
-        private string CollectionName => typeof(T).Name;
 
         public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
         {
-            var cursor = await mongoDatabase.GetCollection<T>(CollectionName)
+            var cursor = await _mongoDatabase.GetCollection<T>(CollectionName)
                 .FindAsync(predicate);
+
             return cursor.ToEnumerable();
         }
 
         public Task<T> Get(string id)
         {
-            return mongoDatabase.GetCollection<T>(CollectionName)
+            return _mongoDatabase.GetCollection<T>(CollectionName)
                 .Find(x => x.Id == id)
                 .SingleOrDefaultAsync();
         }
@@ -35,7 +36,7 @@ namespace ReadModel.Persistence
         {
             try
             {
-                await mongoDatabase.GetCollection<T>(CollectionName)
+                await _mongoDatabase.GetCollection<T>(CollectionName)
                     .InsertOneAsync(entity);
             }
             catch (MongoWriteException ex)
@@ -48,7 +49,7 @@ namespace ReadModel.Persistence
         {
             try
             {
-                var result = await mongoDatabase.GetCollection<T>(CollectionName)
+                var result = await _mongoDatabase.GetCollection<T>(CollectionName)
                     .ReplaceOneAsync(x => x.Id == entity.Id, entity);
 
                 if (result.MatchedCount != 1)

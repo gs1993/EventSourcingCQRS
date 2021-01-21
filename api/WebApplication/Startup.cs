@@ -4,6 +4,7 @@ using Domain.CartModule.Models;
 using Domain.Persistence;
 using Domain.Persistence.EventStore;
 using Domain.PubSub;
+using EventSourcingCQRS.Application.Handlers;
 using EventStore;
 using EventStore.ClientAPI;
 using Microsoft.AspNetCore.Builder;
@@ -60,10 +61,10 @@ namespace WebApplication
             services.AddTransient<IReadOnlyRepository<Product>, MongoDBRepository<Product>>();
             services.AddTransient<IRepository<Product>, MongoDBRepository<Product>>();
             services.AddTransient<IReadOnlyRepository<Customer>, MongoDBRepository<Customer>>();
-            services.AddTransient<IRepository<Customer>, MongoDBRepository<Customer>>(); 
-            //services.AddTransient<IDomainEventHandler<CartId, CartCreatedEvent>, CartUpdater>();
-            //services.AddTransient<IDomainEventHandler<CartId, ProductAddedEvent>, CartUpdater>();
-            //services.AddTransient<IDomainEventHandler<CartId, ProductQuantityChangedEvent>, CartUpdater>();
+            services.AddTransient<IRepository<Customer>, MongoDBRepository<Customer>>();
+            services.AddTransient<IDomainEventHandler<CartId, CartCreatedEvent>, CartUpdater>();
+            services.AddTransient<IDomainEventHandler<CartId, ProductAddedEvent>, CartUpdater>();
+            services.AddTransient<IDomainEventHandler<CartId, ProductQuantityChangedEvent>, CartUpdater>();
             services.AddTransient<ICartWriter, CartWriter>();
             services.AddTransient<ICartReader, CartReader>();
         }
