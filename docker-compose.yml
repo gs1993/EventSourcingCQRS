@@ -9,7 +9,7 @@ services:
       - eventsourcingcqrsnet
 
   eventstore:
-    image: eventstore/eventstore:20.10.0-buster-slim
+    image: eventstore/eventstore:release-5.0.9
     environment:
       - EVENTSTORE_CLUSTER_SIZE=1
       - EVENTSTORE_RUN_PROJECTIONS=All

@@ -4,6 +4,7 @@ using Domain.PubSub;
 using System.Reflection;
 using System;
 using Domain.Persistence.EventStore;
+using CSharpFunctionalExtensions;
 
 namespace Domain.Persistence
 {
@@ -20,7 +21,7 @@ namespace Domain.Persistence
             this.publisher = publisher;
         }
 
-        public async Task<TAggregate> GetByIdAsync(TAggregateId id)
+        public async Task<Maybe<TAggregate>> GetByIdAsync(TAggregateId id)
         {
             try
             {
@@ -28,9 +29,11 @@ namespace Domain.Persistence
                 IEventSourcingAggregate<TAggregateId> aggregatePersistence = aggregate;
 
                 foreach (var @event in await eventStore.ReadEventsAsync(id))
-                {
                     aggregatePersistence.ApplyEvent(@event.DomainEvent, @event.EventNumber);
-                }
+
+                if (aggregate == null)
+                    return Maybe<TAggregate>.None;
+
                 return aggregate;
             }
             catch (EventStoreAggregateNotFoundException)

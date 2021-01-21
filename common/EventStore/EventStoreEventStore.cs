@@ -31,7 +31,7 @@ namespace EventStore
 
                 do
                 {
-                    currentSlice = await _connection.ReadStreamEventsForwardAsync(id.IdAsString(), nextSliceStart, 200, false);
+                    currentSlice = await _connection.ReadStreamEventsForwardAsync(id.IdAsString(), 0, 10, true); //, nextSliceStart, 200, false);
                     if (currentSlice.Status != SliceReadStatus.Success)
                     {
                         throw new EventStoreAggregateNotFoundException($"Aggregate {id.IdAsString()} not found");

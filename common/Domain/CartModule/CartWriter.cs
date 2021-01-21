@@ -5,6 +5,7 @@ using Domain.CustomerModule;
 using Domain.Persistence;
 using Domain.ProductModule;
 using Domain.PubSub;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -41,17 +42,24 @@ namespace Domain.CartModule
 
         public async Task AddProductAsync(string cartId, string productId, int quantity)
         {
-            var cart = await _cartRepository.GetByIdAsync(new CartId(cartId));
+            var cartResult = await _cartRepository.GetByIdAsync(new CartId(cartId));
+            if (cartResult.HasNoValue)
+                throw new ArgumentException(nameof(cartId));
 
+            var cart = cartResult.Value;
             _subscriber.Subscribe<ProductAddedEvent>(async @event => await HandleAsync(_productAddedEventHandlers, @event));
+
             cart.AddProduct(new ProductId(productId), quantity);
             await _cartRepository.SaveAsync(cart);
         }
 
         public async Task ChangeProductQuantityAsync(string cartId, string productId, int quantity)
         {
-            var cart = await _cartRepository.GetByIdAsync(new CartId(cartId));
+            var cartResult = await _cartRepository.GetByIdAsync(new CartId(cartId));
+            if (cartResult.HasNoValue)
+                throw new ArgumentException(nameof(cartId));
 
+            var cart = cartResult.Value;
             _subscriber.Subscribe<ProductQuantityChangedEvent>(async @event => await HandleAsync(_productQuantityChangedEventHandlers, @event));
             cart.ChangeProductQuantity(new ProductId(productId), quantity);
             await _cartRepository.SaveAsync(cart);

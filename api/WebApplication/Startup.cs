@@ -71,7 +71,7 @@ namespace WebApplication
 
         public void Configure(IApplicationBuilder app, 
             IWebHostEnvironment env,
-            IEventStoreConnection conn, 
+            IEventStoreConnection conn,
             IRepository<Product> productRepository,
             IRepository<Customer> customerRepository)
         {

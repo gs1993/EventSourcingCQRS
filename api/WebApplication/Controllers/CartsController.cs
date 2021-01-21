@@ -55,7 +55,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(string customerId)
+        public async Task<IActionResult> Create(string customerId)
         {
             await _cartWriter.CreateAsync(customerId);
 
@@ -73,7 +73,7 @@ namespace WebApplication.Controllers
 
         [Route("Carts/{id:length(41)}/ChangeProductQuantity")]
         [HttpPost]
-        public async Task<IActionResult> ChangeProductQuantityAsync(string id, string productId, int quantity)
+        public async Task<IActionResult> ChangeProductQuantity(string id, string productId, int quantity)
         {
             await _cartWriter.ChangeProductQuantityAsync(id, productId, quantity);
 

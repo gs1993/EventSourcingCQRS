@@ -1,13 +1,14 @@
 ﻿using Domain.Core;
 using System.Threading.Tasks;
 using System;
+using CSharpFunctionalExtensions;
 
 namespace Domain.Persistence
 {
     public interface IRepository<TAggregate, TAggregateId>
         where TAggregate: IAggregate<TAggregateId>
     {
-        Task<TAggregate> GetByIdAsync(TAggregateId id);
+        Task<Maybe<TAggregate>> GetByIdAsync(TAggregateId id);
 
         Task SaveAsync(TAggregate aggregate);
     }
