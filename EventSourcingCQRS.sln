@@ -3,22 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A6358068-E812-4129-91AF-3F57C5D456A5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingCQRS.Domain", "EventSourcingCQRS.Domain\EventSourcingCQRS.Domain.csproj", "{26EA3D8C-7D19-44E6-B00F-9D9CBF10A695}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingCQRS.Domain.Tests", "EventSourcingCQRS.Domain.Tests\EventSourcingCQRS.Domain.Tests.csproj", "{2510D09E-4F63-416D-B168-39CCE50EFB4C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingCQRS.Domain.EventStore", "EventSourcingCQRS.Domain.EventStore\EventSourcingCQRS.Domain.EventStore.csproj", "{46F0534F-B627-4B76-B887-6D0B594FFEB2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingCQRS.Domain.EventStore.Tests", "EventSourcingCQRS.Domain.EventStore.Tests\EventSourcingCQRS.Domain.EventStore.Tests.csproj", "{A4867FC5-06E4-494A-8707-5829B7A34B67}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingCQRS.ReadModel.Tests", "EventSourcingCQRS.ReadModel.Tests\EventSourcingCQRS.ReadModel.Tests.csproj", "{B38E0FEB-43B2-41AD-AA3F-53B8F4C7C718}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingCQRS.Application", "EventSourcingCQRS.Application\EventSourcingCQRS.Application.csproj", "{F9F8DA44-C49F-4398-B9A6-76BCDCDDB1ED}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingCQRS.Application.Tests", "EventSourcingCQRS.Application.Tests\EventSourcingCQRS.Application.Tests.csproj", "{AF725926-4CDE-4D77-9DD9-6984AAFC7DAD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{D562C802-3E21-4BF8-A590-0A4C0808B873}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "api\WebApplication\WebApplication.csproj", "{5361026A-CBCE-4E31-88C0-B16C9CFD16C1}"
@@ -37,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "common\Domain\Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventStore", "common\EventStore\EventStore.csproj", "{EC39715D-ED98-43DA-A998-D806E45011EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartHandler", "handlers\CartHandler\CartHandler.csproj", "{4A326AAA-7278-42F1-86D2-2D7DB3CD068E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartHandler", "handlers\CartHandler\CartHandler.csproj", "{4A326AAA-7278-42F1-86D2-2D7DB3CD068E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,38 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A6358068-E812-4129-91AF-3F57C5D456A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6358068-E812-4129-91AF-3F57C5D456A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6358068-E812-4129-91AF-3F57C5D456A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6358068-E812-4129-91AF-3F57C5D456A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26EA3D8C-7D19-44E6-B00F-9D9CBF10A695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26EA3D8C-7D19-44E6-B00F-9D9CBF10A695}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26EA3D8C-7D19-44E6-B00F-9D9CBF10A695}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26EA3D8C-7D19-44E6-B00F-9D9CBF10A695}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2510D09E-4F63-416D-B168-39CCE50EFB4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2510D09E-4F63-416D-B168-39CCE50EFB4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2510D09E-4F63-416D-B168-39CCE50EFB4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2510D09E-4F63-416D-B168-39CCE50EFB4C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46F0534F-B627-4B76-B887-6D0B594FFEB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46F0534F-B627-4B76-B887-6D0B594FFEB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46F0534F-B627-4B76-B887-6D0B594FFEB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46F0534F-B627-4B76-B887-6D0B594FFEB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4867FC5-06E4-494A-8707-5829B7A34B67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4867FC5-06E4-494A-8707-5829B7A34B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4867FC5-06E4-494A-8707-5829B7A34B67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4867FC5-06E4-494A-8707-5829B7A34B67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B38E0FEB-43B2-41AD-AA3F-53B8F4C7C718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B38E0FEB-43B2-41AD-AA3F-53B8F4C7C718}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B38E0FEB-43B2-41AD-AA3F-53B8F4C7C718}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B38E0FEB-43B2-41AD-AA3F-53B8F4C7C718}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F9F8DA44-C49F-4398-B9A6-76BCDCDDB1ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9F8DA44-C49F-4398-B9A6-76BCDCDDB1ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9F8DA44-C49F-4398-B9A6-76BCDCDDB1ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9F8DA44-C49F-4398-B9A6-76BCDCDDB1ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF725926-4CDE-4D77-9DD9-6984AAFC7DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF725926-4CDE-4D77-9DD9-6984AAFC7DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF725926-4CDE-4D77-9DD9-6984AAFC7DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF725926-4CDE-4D77-9DD9-6984AAFC7DAD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5361026A-CBCE-4E31-88C0-B16C9CFD16C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5361026A-CBCE-4E31-88C0-B16C9CFD16C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5361026A-CBCE-4E31-88C0-B16C9CFD16C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
