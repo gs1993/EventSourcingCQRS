@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{D562C802-3E21-4BF8-A590-0A4C0808B873}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "src\api", "{D562C802-3E21-4BF8-A590-0A4C0808B873}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "api\WebApplication\WebApplication.csproj", "{5361026A-CBCE-4E31-88C0-B16C9CFD16C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "src\api\WebApplication\WebApplication.csproj", "{5361026A-CBCE-4E31-88C0-B16C9CFD16C1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AFAD71AB-A514-4DEE-A79B-BA0B1184D45B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "src\tests", "{AFAD71AB-A514-4DEE-A79B-BA0B1184D45B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{6E514593-1312-45AF-8BB6-C1E19C9784BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "src\tests\UnitTests\UnitTests.csproj", "{6E514593-1312-45AF-8BB6-C1E19C9784BB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{F7F05954-6054-4092-8B88-70E1CA0DBAB8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "src\common", "{F7F05954-6054-4092-8B88-70E1CA0DBAB8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadModel", "common\ReadModel\ReadModel.csproj", "{C5211F68-2B4C-4683-A4FB-B019B50E3536}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadModel", "src\common\ReadModel\ReadModel.csproj", "{C5211F68-2B4C-4683-A4FB-B019B50E3536}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "handlers", "handlers", "{4F14F18F-2F75-4CDD-908E-CEAE582F2310}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "handlers", "src\handlers", "{4F14F18F-2F75-4CDD-908E-CEAE582F2310}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "common\Domain\Domain.csproj", "{5F47495E-15DD-4466-A416-FC89CAFAEE3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\common\Domain\Domain.csproj", "{5F47495E-15DD-4466-A416-FC89CAFAEE3B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventStore", "common\EventStore\EventStore.csproj", "{EC39715D-ED98-43DA-A998-D806E45011EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventStore", "src\common\EventStore\EventStore.csproj", "{EC39715D-ED98-43DA-A998-D806E45011EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartHandler", "handlers\CartHandler\CartHandler.csproj", "{4A326AAA-7278-42F1-86D2-2D7DB3CD068E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartHandler", "src\handlers\CartHandler\CartHandler.csproj", "{4A326AAA-7278-42F1-86D2-2D7DB3CD068E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
